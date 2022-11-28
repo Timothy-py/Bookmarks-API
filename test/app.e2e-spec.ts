@@ -4,6 +4,7 @@ import * as pactum from 'pactum'
 import { PrismaService } from '../src/prisma/prisma.service'
 import { AppModule } from  '../src/app.module'
 import { AuthDto } from '../src/auth/dto'
+import { EditUserDto } from 'src/user/dto/edit-user.dto'
 
 // Simulate nest application
 describe('App E2E', () => {
@@ -61,21 +62,38 @@ describe('App E2E', () => {
           .stores('userAt', 'access_token')
       })
     })
+  })
 
-    describe('User', () => {
-      describe('Get me', () => {
-        it('should get current user', () => {
-          return pactum
-            .spec()
-            .get('/users/me')
-            .withHeaders({
-              Authorization: 'Bearer $S{userAt}'
-            })
-            .expectStatus(200)
-        })
+  describe('User', () => {
+    describe('Get me', () => {
+      it('should get current user', () => {
+        return pactum
+          .spec()
+          .get('/users/me')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .expectStatus(200)
       })
     })
 
+    describe('Edit user', ()=>{
+      it('should edit a user', () => {
+        const dto: EditUserDto = {
+          firstName: 'Timothy',
+          email: 'timo@gmail.com'
+        }
+        return pactum
+          .spec()
+          .patch('/users')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          .expectBodyContains(dto.firstName)
+      })
+    })
   })
  })
 
