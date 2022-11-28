@@ -50,6 +50,17 @@ describe('App E2E', () => {
           // .inspect()
       })
     })
+
+    describe('Signin', ()=>{
+      it('should signin', ()=>{
+        return pactum
+          .spec()
+          .post('/auth/signin')
+          .withBody(dto)
+          .expectStatus(200)
+          // .inspect()
+      })
+    })
   })
  })
 
