@@ -5,6 +5,7 @@ import { PrismaService } from '../src/prisma/prisma.service'
 import { AppModule } from  '../src/app.module'
 import { AuthDto } from '../src/auth/dto'
 import { EditUserDto } from 'src/user/dto/edit-user.dto'
+import { createBookmarkDto } from 'src/bookmark/dto/create-bookmark.dto'
 
 // Simulate nest application
 describe('App E2E', () => {
@@ -107,11 +108,26 @@ describe('App E2E', () => {
           })
           .expectStatus(200)
           .expectBody([])
-          .inspect()
       })
     })
 
-    describe('Create bookmark', ()=>{})
+    describe('Create bookmark', ()=>{
+      const dto: createBookmarkDto = {
+        title: 'First Bookmark',
+        link: 'https://www.timothyadeyeye.netlify.app'
+      };
+
+      it('should create a bookmark', ()=>{
+        return pactum
+          .spec()
+          .post('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .withBody(dto)
+          .expectStatus(201)
+      })
+    })
 
     describe('Get bookmark by id', ()=>{})
 
