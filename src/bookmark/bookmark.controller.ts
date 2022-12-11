@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
-import { GetUser } from 'src/auth/decorator';
-import { JwtGuard } from 'src/auth/guard';
+import { GetUser } from '../../src/auth/decorator';
+import { JwtGuard } from '../../src/auth/guard';
 import { BookmarkService } from './bookmark.service';
 import { createBookmarkDto } from './dto/create-bookmark.dto';
 import { editBookmarkDto } from './dto/edit-bookmark.dto';

@@ -97,7 +97,19 @@ describe('App E2E', () => {
   })
 
   describe('Bookmarks', () => {
-    describe('Get bookmarks', ()=>{})
+    describe('Get empty bookmarks', ()=>{
+      it('should get bookmarks', ()=>{
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .expectStatus(200)
+          .expectBody([])
+          .inspect()
+      })
+    })
 
     describe('Create bookmark', ()=>{})
 
