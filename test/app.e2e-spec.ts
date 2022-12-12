@@ -126,6 +126,7 @@ describe('App E2E', () => {
           })
           .withBody(dto)
           .expectStatus(201)
+          .stores('bookmarkId', 'id')
       })
     })
 
@@ -142,7 +143,19 @@ describe('App E2E', () => {
       })
     })
 
-    describe('Get bookmark by id', ()=>{})
+    describe('Get bookmark by id', ()=>{
+      it('should get bookmark by id', ()=>{
+        return pactum
+          .spec()
+          .get('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .expectStatus(200)
+          .inspect()
+      })
+    })
 
     describe('Edit bookmark by id', ()=>{})
 
