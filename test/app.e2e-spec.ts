@@ -179,7 +179,18 @@ describe('App E2E', () => {
       })
     })
 
-    describe('Delete bookmark by id', ()=>{})
+    describe('Delete bookmark by id', ()=>{
+      it('should delete a bookmark', ()=>{
+        return pactum
+          .spec()
+          .delete('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .expectStatus(204)
+      })
+    })
   })
   
  })
