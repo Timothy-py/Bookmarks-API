@@ -6,6 +6,7 @@ import { AppModule } from  '../src/app.module'
 import { AuthDto } from '../src/auth/dto'
 import { EditUserDto } from 'src/user/dto/edit-user.dto'
 import { createBookmarkDto } from 'src/bookmark/dto/create-bookmark.dto'
+import { editBookmarkDto } from 'src/bookmark/dto'
 
 // Simulate nest application
 describe('App E2E', () => {
@@ -157,7 +158,26 @@ describe('App E2E', () => {
       })
     })
 
-    describe('Edit bookmark by id', ()=>{})
+    describe('Edit bookmark by id', ()=>{
+      const dto: editBookmarkDto = {
+        title: "Bala blu bulaba bluu",
+        description: "Bula ba bala bluee"
+      }
+
+      it('should edit a bookmark', () => {
+        return pactum
+          .spec()
+          .patch('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}'
+          })
+          .withBody(dto)
+          .expectStatus(200)
+          // .expectBodyContains('$s(bookmarkId)')
+          .inspect()
+      })
+    })
 
     describe('Delete bookmark by id', ()=>{})
   })
